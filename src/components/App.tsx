@@ -5,14 +5,18 @@ import SearchBar from './SearchBar/SearchBar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Error from './ErrorMessage/ErrorMessage';
 import Loader from './Loader/Loader';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import LoadMoreBtn from './LoadMoreBtn/LoadMoreBtn';
 import ImageModal from './ImageModal/ImageModal';
 import { Photo } from './ImageModal/ImageModal';
 type Images = {
     [key: string]: any;
 }
-
+interface ImagesResponse {
+    total: number;
+    total_pages: number;
+    results: Photo[];
+}
 const App = () => {
     const [photos, setPhotos] = useState<Images[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -38,13 +42,13 @@ const App = () => {
     const baseURL= "https://api.unsplash.com/search/photos/?";
     const accessKey = "RBukxUK_I9GjSKnvHTgvdpwXFN5U9C58BKFGR3j6tnM";
 
-    const handleSearch = async (topic:string) => {
+    const handleSearch = async (topic:string): Promise<void> => {
         try {
             setError(false);
             setPage(1);
             setLoading(true);
             setTopic(topic);
-            const response = await axios.get(baseURL, {
+            const response: AxiosResponse<ImagesResponse> = await axios.get(baseURL, {
                 params: {
                     client_id: accessKey,
                     query: topic,
@@ -69,11 +73,11 @@ const App = () => {
             setLoading(false);
         }
     }
-    const handleMoreClick = async () => {
+    const handleMoreClick = async (): Promise<void> => {
         try {
             setPage(prev => prev + 1);
             setLoading(true);
-            const response = await axios.get(baseURL, {
+            const response: AxiosResponse<ImagesResponse> = await axios.get(baseURL, {
                 params: {
                     client_id: accessKey,
                     query: searchTopic,
@@ -97,9 +101,9 @@ const App = () => {
             setLoading(false);
         }
     }
-    const handleImageClick = async (imageId:string) => {
+    const handleImageClick = async (imageId:string): Promise<void> => {
         try {
-            const response = await axios.get(`https://api.unsplash.com/photos/${imageId}`, {
+            const response: AxiosResponse<Photo> = await axios.get(`https://api.unsplash.com/photos/${imageId}`, {
                 params: {
                     client_id: accessKey,
                 }
