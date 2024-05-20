@@ -24,7 +24,7 @@ const ImageModal: React.FC<Props> = ({ photo, modalState, close, afterClose }) =
     Modal.setAppElement('#root');
     return (
         <Modal
-            parentSelector={() => document.querySelector('#root')}
+            parentSelector={() => document.querySelector('#root')!}
             isOpen={modalState}
             onAfterClose={afterClose}
             onRequestClose={close}
