@@ -21,7 +21,6 @@ type Props = {
     afterClose: () => void;
 }
 const ImageModal: React.FC<Props> = ({ photo, modalState, close, afterClose }) => {
-    if (!modalState) return null;
     Modal.setAppElement('#root');
     return (
         <Modal
