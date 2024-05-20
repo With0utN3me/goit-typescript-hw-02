@@ -1,0 +1,14 @@
+.card-wrapper{
+    width: 340px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+.image{
+    display: block;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+.stast-wrapper{
+    background-color: aquamarine;
+}

@@ -1,0 +1,11 @@
+.load-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    margin-top: 10px;
+}
+.load-p{
+    font-size: 22px;
+}

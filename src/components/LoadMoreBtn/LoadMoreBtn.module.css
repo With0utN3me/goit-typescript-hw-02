@@ -1,0 +1,10 @@
+.load-more-wrapper{
+    margin: 30px auto;
+}
+.load-more{
+    border: none;
+    padding: 12px;
+    width: 180px;
+    background-color: aquamarine;
+    border-radius: 5px;
+}
