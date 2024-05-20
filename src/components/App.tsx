@@ -8,24 +8,28 @@ import Loader from './Loader/Loader';
 import axios from 'axios';
 import LoadMoreBtn from './LoadMoreBtn/LoadMoreBtn';
 import ImageModal from './ImageModal/ImageModal';
+import { Photo } from './ImageModal/ImageModal';
+type Images = {
+    [key: string]: any;
+}
 
 const App = () => {
-    const [photos, setPhotos] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(false);
-    const [page, setPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(0);
-    const [searchTopic, setTopic] = useState("");
-    const [image, setImage] = useState({});
+    const [photos, setPhotos] = useState<Images[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [error, setError] = useState<boolean>(false);
+    const [page, setPage] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(0);
+    const [searchTopic, setTopic] = useState<string>("");
+    const [image, setImage] = useState<Photo | null>(null);
 
     const handleError = () => toast.error("Sorry, an error has occured.");
 
-    const [modalIsOpen, setIsOpen] = useState(false);
-    const openModal = () => {
+    const [modalIsOpen, setIsOpen] = useState<boolean>(false);
+    const openModal = ():void => {
         setIsOpen(true);
     }
     const afterCloseModal = () => {
-        setImage({});
+        setImage(null);
     }
     const closeModal = () => {
         setIsOpen(false);
@@ -34,7 +38,7 @@ const App = () => {
     const baseURL= "https://api.unsplash.com/search/photos/?";
     const accessKey = "RBukxUK_I9GjSKnvHTgvdpwXFN5U9C58BKFGR3j6tnM";
 
-    const handleSearch = async (topic) => {
+    const handleSearch = async (topic:string) => {
         try {
             setError(false);
             setPage(1);
@@ -93,7 +97,7 @@ const App = () => {
             setLoading(false);
         }
     }
-    const handleImageClick = async (imageId) => {
+    const handleImageClick = async (imageId:string) => {
         try {
             const response = await axios.get(`https://api.unsplash.com/photos/${imageId}`, {
                 params: {
@@ -101,10 +105,10 @@ const App = () => {
                 }
             });
             if (response.data) {
-                setImage(response.data)
+                setImage(response.data);
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
             handleError();
         }
     }
@@ -119,8 +123,8 @@ const App = () => {
             {photos.length > 0 && <ImageGallery images={photos} onImageClick={handleImageClick} onClick={openModal}/>}
             {loading && <Loader />}
             {totalPages > 1 && totalPages > page && <LoadMoreBtn onClick={handleMoreClick}/>}
-            {Object.keys(image).length > 0 && <ImageModal 
-                image={image}
+            {image && Object.keys(image).length > 0 && <ImageModal 
+                photo={image}
                 modalState={modalIsOpen}
                 close={closeModal}
                 afterClose={afterCloseModal}

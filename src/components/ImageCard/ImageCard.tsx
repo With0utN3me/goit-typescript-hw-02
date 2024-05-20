@@ -1,5 +1,10 @@
 import css from "./ImageCard.module.css";
-const ImageCard = ({ likes, photo, descr}) => {
+type Props = {
+    likes: number,
+    photo: string,
+    descr: string,
+}
+const ImageCard = ({ likes, photo, descr}: Props) => {
     return(
         <div className={css["card-wrapper"]}>
             <img className={css["image"]} src={photo} alt={descr}/>

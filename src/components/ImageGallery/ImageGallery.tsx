@@ -1,8 +1,13 @@
 import ImageCard from "../ImageCard/ImageCard";
 import css from "./ImageGallery.module.css";
+type Props = {
+    images: [...any];
+    onClick: () => void;
+    onImageClick: (T:string) => void;
+}
 
-const ImageGallery = ({ images, onClick, onImageClick }) => {
-    const handleClick = (imageId) => {
+const ImageGallery = ({ images, onClick, onImageClick }: Props) => {
+    const handleClick = (imageId:string):void => {
         onClick();
         onImageClick(imageId);
     };
